@@ -1,0 +1,16 @@
+{
+  "productId": "AN-OW-07-001",
+  "name": "The Cashmere Overcoat",
+  "collection": "No. 07 — Outerwear",
+  "price": { "amount": 2480, "currency": "USD" },
+  "origin": { "atelier": "Scottish Borders", "weaver": "Fourth-generation", "daysToWeave": 11 },
+  "materials": [{ "name": "Grade-A Mongolian Cashmere", "certification": "Hand-sorted" }],
+  "construction": ["Unlined shoulders", "Hand-finished seams", "Corozo buttons"],
+  "editionSize": 42,
+  "schema": {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "The Cashmere Overcoat",
+    "offers": { "@type": "Offer", "price": "2480", "priceCurrency": "USD", "availability": "https://schema.org/InStock" }
+  }
+}
