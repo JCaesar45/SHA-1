@@ -1,0 +1,4 @@
+python3 -m venv venv && source venv/bin/activate
+pip install flask flask-cors stripe
+export STRIPE_SECRET_KEY=sk_test_...
+python app.py
