@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ATELIER NOIR — Cashmere Overcoat</title>
+    <style>
+      :root {
+        --espresso: #1a1410;
+        --ivory: #f7f4ef;
+        --gold: #b8965a;
+        --stone: #8a8178;
+        --serif: "Georgia", "Times New Roman", serif;
+        --sans: "Helvetica Neue", Arial, sans-serif;
+        --ease-luxury: cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: var(--ivory);
+        color: var(--espresso);
+        font-family: var(--sans);
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+      }
+
+      /* Top bar: rotating USP — pure CSS, pauses on reduced-motion */
+      .usp-bar {
+        background: var(--espresso);
+        color: var(--ivory);
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        position: relative;
+        overflow: hidden;
+      }
+      .usp-track {
+        display: flex;
+        flex-direction: column;
+        animation: uspCycle 12s infinite;
+      }
+      .usp-track span {
+        height: 40px;
+        display: flex;
+        align-items: center;
+      }
+      @keyframes uspCycle {
+        0%,
+        28% {
+          transform: translateY(0);
+        }
+        33%,
+        61% {
+          transform: translateY(-40px);
+        }
+        66%,
+        94% {
+          transform: translateY(-80px);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .usp-track {
+          animation: none;
+        }
+        .usp-track span:not(:first-child) {
+          display: none;
+        }
+      }
+
+      /* Hero: full-bleed, one image per screen */
+      .hero {
+        min-height: 92vh;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        padding: 0 6vw;
+        gap: 4vw;
+      }
+      .hero-visual {
+        aspect-ratio: 3/4;
+        background: var(--stone);
+        position: relative;
+        overflow: hidden;
+        opacity: 0;
+        transform: scale(1.04);
+        transition:
+          opacity 1.2s var(--ease-luxury),
+          transform 1.2s var(--ease-luxury);
+      }
+      .hero-visual.in-view {
+        opacity: 1;
+        transform: scale(1);
+      }
+      .hero-visual::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          transparent 40%,
+          rgba(184, 150, 90, 0.12) 100%
+        );
+        pointer-events: none;
+      }
+      .hero-copy {
+        padding-right: 2vw;
+      }
+      .eyebrow {
+        font-size: 10px;
+        letter-spacing: 0.32em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 24px;
+      }
+      h1 {
+        font-family: var(--serif);
+        font-size: clamp(2.4rem, 5vw, 4.2rem);
+        font-weight: 400;
+        line-height: 1.08;
+        margin-bottom: 28px;
+        letter-spacing: -0.02em;
+      }
+      .price {
+        font-size: 1.1rem;
+        letter-spacing: 0.06em;
+        color: var(--stone);
+        margin-bottom: 40px;
+      }
+      .cta {
+        display: inline-block;
+        background: var(--espresso);
+        color: var(--ivory);
+        padding: 18px 48px;
+        font-size: 11px;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        transition:
+          letter-spacing 0.6s var(--ease-luxury),
+          background 0.4s;
+      }
+      .cta::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: var(--gold);
+        transform: translateX(-101%);
+        transition: transform 0.6s var(--ease-luxury);
+        z-index: 0;
+      }
+      .cta:hover::before {
+        transform: translateX(0);
+      }
+      .cta:hover {
+        letter-spacing: 0.32em;
+        color: var(--espresso);
+      }
+      .cta span {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Scroll-paced product detail */
+      .detail {
+        padding: 16vh 6vw;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8vw;
+        align-items: start;
+      }
+      .detail-block {
+        opacity: 0;
+        transform: translateY(32px);
+        transition:
+          opacity 1s var(--ease-luxury),
+          transform 1s var(--ease-luxury);
+      }
+      .detail-block.in-view {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .detail-block h2 {
+        font-family: var(--serif);
+        font-weight: 400;
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+      }
+      .detail-block p {
+        font-size: 0.95rem;
+        line-height: 1.8;
+        color: var(--stone);
+        max-width: 44ch;
+      }
+      .origin-badge {
+        display: inline-block;
+        margin-top: 24px;
+        font-size: 10px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        border: 1px solid var(--gold);
+        color: var(--gold);
+        padding: 10px 18px;
+      }
+
+      /* Sticky footer CTA */
+      .sticky-cta {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: var(--ivory);
+        border-top: 1px solid rgba(26, 20, 16, 0.08);
+        padding: 16px 6vw;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transform: translateY(100%);
+        transition: transform 0.5s var(--ease-luxury);
+        z-index: 50;
+      }
+      .sticky-cta.visible {
+        transform: translateY(0);
+      }
+      .sticky-cta .name {
+        font-family: var(--serif);
+        font-size: 1rem;
+      }
+      .sticky-cta .cta {
+        padding: 14px 36px;
+        font-size: 10px;
+      }
+
+      @media (max-width: 820px) {
+        .hero {
+          grid-template-columns: 1fr;
+          gap: 40px;
+          padding-top: 8vh;
+          min-height: auto;
+        }
+        .hero-visual {
+          aspect-ratio: 4/5;
+        }
+        .detail {
+          grid-template-columns: 1fr;
+          gap: 48px;
+          padding: 10vh 6vw;
+        }
+        .sticky-cta .name {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="usp-bar">
+      <div class="usp-track">
+        <span>Complimentary Shipping Worldwide</span>
+        <span>Certified Grade-A Cashmere</span>
+        <span>30-Day Atelier Returns</span>
+      </div>
+    </div>
+
+    <section class="hero">
+      <div class="hero-visual" id="heroVisual">
+        <!-- Replace with your AVIF/WebP picture cascade -->
+      </div>
+      <div class="hero-copy">
+        <div class="eyebrow">Collection No. 07 — Outerwear</div>
+        <h1>The Cashmere Overcoat</h1>
+        <div class="price">$2,480 USD</div>
+        <button class="cta" id="heroCta"><span>Reserve Yours</span></button>
+      </div>
+    </section>
+
+    <section class="detail">
+      <div class="detail-block" id="block1">
+        <h2>Origin</h2>
+        <p>
+          Woven in a fourth-generation atelier in the Scottish Borders. Each
+          coat begins with Grade-A Mongolian cashmere, hand-sorted and dyed in
+          small batches. The weave takes eleven days. We make forty-two per
+          season.
+        </p>
+        <div class="origin-badge">Hand-Woven · Scottish Borders</div>
+      </div>
+      <div class="detail-block" id="block2">
+        <h2>Construction</h2>
+        <p>
+          Unlined shoulders for drape. Hand-finished seams. Corozo buttons from
+          Ecuador. The collar is cut on a bias so it falls open without
+          instruction. This is not a coat you break in. It arrives correct.
+        </p>
+      </div>
+    </section>
+
+    <div class="sticky-cta" id="stickyCta">
+      <span class="name">The Cashmere Overcoat</span>
+      <button class="cta"><span>Reserve — $2,480</span></button>
+    </div>
+
+    <script>
+      (function () {
+        "use strict";
+
+        // Intersection Observer for scroll-paced reveals
+        const revealTargets = [
+          document.getElementById("heroVisual"),
+          document.getElementById("block1"),
+          document.getElementById("block2")
+        ];
+
+        const observer = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("in-view");
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.2, rootMargin: "0px 0px -60px 0px" }
+        );
+
+        revealTargets.forEach(function (el) {
+          if (el) observer.observe(el);
+        });
+
+        // Sticky CTA: appears after hero leaves viewport
+        const hero = document.querySelector(".hero");
+        const sticky = document.getElementById("stickyCta");
+
+        const stickyObserver = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (!entry.isIntersecting) {
+                sticky.classList.add("visible");
+              } else {
+                sticky.classList.remove("visible");
+              }
+            });
+          },
+          { threshold: 0 }
+        );
+
+        if (hero) stickyObserver.observe(hero);
+
+        // CTA micro-feedback: subtle haptic-style press
+        document.querySelectorAll(".cta").forEach(function (btn) {
+          btn.addEventListener("click", function (e) {
+            e.preventDefault();
+            btn.style.transform = "scale(0.98)";
+            setTimeout(function () {
+              btn.style.transform = "";
+            }, 120);
+            // In production: dispatch add-to-cart event here
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>
